@@ -1,0 +1,30 @@
+{
+  "name": "traveey_oa",
+  "version": "1.0.0",
+  "description": "First Round of Traveey OA",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/qubits-fan/traveey_oa.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/qubits-fan/traveey_oa/issues"
+  },
+  "homepage": "https://github.com/qubits-fan/traveey_oa#readme",
+  "dependencies": {
+    "@hapi/joi": "^17.1.1",
+    "body-parser": "^1.20.2",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "mysql": "^2.18.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.21"
+  }
+}
