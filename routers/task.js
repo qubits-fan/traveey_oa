@@ -1,11 +1,11 @@
 const express = require('express')
- const { taskCreateValidation, taskUpdateValidation } = require('../validators/taksValidator')
+const { taskCreateValidation, taskUpdateValidation } = require('../validators/taksValidator')
       router  = new express.Router()
 
+// ADD NEW TASK
 
 router.post('/task/:owner/newTask',async(req,res)=>{
     try{
-
         const owner = req.params['owner']
         if(!owner) {
             return res.status(400).send({"error":"Employee Id Not Found!"})
@@ -26,12 +26,12 @@ router.post('/task/:owner/newTask',async(req,res)=>{
         const dbRes = await dbquery(sql)
         
         res.status(201).send({"success": "Task Created Successfully"
-    , "taskId": dbRes.insertId})
+        , "taskId": dbRes.insertId})
 
     }
     catch(err) {
          console.log(err)
-         res.status(500).send({"error": toString(err)})
+         res.status(500).send({"error": "Could't Registered User"})
     }
 })
 
@@ -49,12 +49,16 @@ router.get('/task/:id',async(req,res)=>{
         let sql = `SELECT * FROM task WHERE id=${id}`
         
         const dbRes = await dbquery(sql)
+        
+        if(dbRes.length == 0) {
+            return res.status(204).send();
+        }
 
         return res.status(201).send(dbRes[0])
     }
     catch(err) {
         console.log(err)
-        res.status(500).send({"error":toString(err)})
+        res.status(500).send({"error": "Internal Error"})
     } 
 })
 
@@ -72,11 +76,15 @@ router.get('/task/getByEmployeeId/:employeeId', async(req, res)=>{
 
         const dbRes = await dbquery(sql)
 
+        if(dbRes.length ==0 ){
+            return res.status(204).send();
+        }
+
         return res.status(201).send(dbRes)
     }
     catch(err) {
         console.log(err)
-        res.status(500).send({"error": toString(err)})
+        res.status(500).send({"error": "Internal Server Error"})
     }
 })
 
@@ -113,16 +121,13 @@ router.put('/task/:id/update',async(req,res)=>{
         sql = sql.substring(0,sql.length-1)
         sql += ` WHERE id=${id} `
         
-        
-        console.log(sql)
- 
         await dbquery(sql)
 
         res.status(201).send({"success":"Update the Data Successfully"})
     }
     catch(err) {
          console.log(err)
-         res.status(500).send({"error":toString(err)})
+         res.status(500).send({"error": "Could Not Update"})
     }
 })
 
@@ -147,7 +152,7 @@ router.delete('/task/:id',async(req,res)=>{
     }
     catch(err) {
         console.log(err)
-        res.status(500).send({"error":toString(err)})
+        res.status(500).send({"error": "Could Not Delete Task"})
     }
 })
 

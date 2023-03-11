@@ -23,7 +23,7 @@ router.post('/employee/create',async(req,res)=>{
         const dbRes = await dbquery(sql)
     
         res.status(201).send({"success":"Employee Registered Successfully",
-    "id": dbRes.insertId})
+        "id": dbRes.insertId})
     }
     catch(err) {
         console.log(err)
@@ -73,24 +73,24 @@ router.put('/employee/:id/update',async(req,res)=>{
         return res.status(400).send({"error": error.details[0].message})
     }
     try {
-         let sql = 'UPDATE employee SET '
+        let sql = 'UPDATE employee SET '
          
-         Object.entries(data).forEach(element=>{
+        Object.entries(data).forEach(element=>{
             if(element[0] == 'id') return
             sql += ` ${element[0]} = '${element[1]}',`
 
-         })
-         sql =  sql.substring(0,sql.length-1)
-         sql += ` WHERE id = ${id}`
+        })
+        sql =  sql.substring(0,sql.length-1)
+        sql += ` WHERE id = ${id}`
 
-         const dbRes = await dbquery(sql)
+        const dbRes = await dbquery(sql)
 
-         return res.status(201).send({"success": "Data Update Successful"})
+        return res.status(201).send({"success": "Data Update Successful"})
 
     }
     catch(err) {
         console.log(err)
-        res.status(500).send({"error": toString(err)})
+        res.status(500).send({"error": "Could Not Update"})
     }
 })
 
@@ -111,7 +111,7 @@ router.delete('/employee/:id',async(req,res)=>{
         res.status(201).send({"success": "Employee records deleted successfully"})
     }
     catch(err) {
-        res.status(500).send({"error":"Internal Server Error"})
+        res.status(500).send({"error":"Unable to Delete Data"})
     }
 })
 
